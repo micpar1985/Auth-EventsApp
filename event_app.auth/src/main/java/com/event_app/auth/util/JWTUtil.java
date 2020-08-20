@@ -1,6 +1,6 @@
 package com.event_app.auth.util;
 
-import com.event_app.auth.Domain.Token;
+import com.event_app.auth.domain.Token;
 
 public interface JWTUtil {
         public boolean verifyToken(String jwt_token);

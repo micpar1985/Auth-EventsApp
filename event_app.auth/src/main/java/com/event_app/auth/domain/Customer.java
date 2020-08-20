@@ -1,4 +1,4 @@
-package com.event_app.auth.Domain;
+package com.event_app.auth.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

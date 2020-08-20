@@ -1,6 +1,6 @@
 package com.event_app.auth.api;
 
-import com.event_app.auth.Domain.Token;
+import com.event_app.auth.domain.Token;
 import com.event_app.auth.util.JWTHelper;
 import com.event_app.auth.util.JWTUtil;
 import org.springframework.http.HttpStatus;

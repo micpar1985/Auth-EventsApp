@@ -1,8 +1,8 @@
 package com.event_app.auth.api;
 
-import com.event_app.auth.Domain.Customer;
-import com.event_app.auth.Domain.CustomerFactory;
-import com.event_app.auth.Domain.Token;
+import com.event_app.auth.domain.Customer;
+import com.event_app.auth.domain.CustomerFactory;
+import com.event_app.auth.domain.Token;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
