@@ -1,4 +1,4 @@
-package com.event_app.auth.api;
+package com.event_app.auth.util;
 
 import java.util.Date;
 import java.util.Map;
@@ -9,6 +9,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.event_app.auth.Domain.Token;
+import com.event_app.auth.util.JWTUtil;
 
 public class JWTHelper implements JWTUtil {
 

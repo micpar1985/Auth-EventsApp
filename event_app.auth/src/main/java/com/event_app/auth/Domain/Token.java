@@ -1,4 +1,4 @@
-package com.event_app.auth.api;
+package com.event_app.auth.Domain;
 
 public class Token {
 	String token;

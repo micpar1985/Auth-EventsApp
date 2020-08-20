@@ -1,4 +1,7 @@
-package com.event_app.auth.api;
+package com.event_app.auth.util;
+
+import com.event_app.auth.Domain.Token;
+import com.event_app.auth.util.JWTUtil;
 
 public class JWTMockUtil implements JWTUtil {
 
