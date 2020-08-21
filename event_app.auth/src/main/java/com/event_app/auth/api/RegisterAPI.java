@@ -1,15 +1,9 @@
 package com.event_app.auth.api;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.charset.Charset;
 
+import com.event_app.auth.domain.Customer;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.event_app.auth.domain.Customer;
 import com.event_app.auth.domain.CustomerFactory;
-import com.event_app.auth.domain.Token;
 
 @RestController
 @RequestMapping("/register")
