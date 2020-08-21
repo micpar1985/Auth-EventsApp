@@ -40,7 +40,7 @@ public class Authenticator {
             String customersUrl = "http://localhost:8080/api/customers/byName/" + username;
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Authorization", "Bearer " + getAppUserToken());
+            headers.set("Authorization", "Bearer " + getAppUserToken().getToken());
             HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
             response = restTemplate.exchange(customersUrl, HttpMethod.GET, entity, Customer.class);
             System.out.println("Result - status (" + response.getStatusCode() + ") has body: " + response.hasBody());

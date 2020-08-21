@@ -5,6 +5,10 @@ public class TokenRequestData {
 	String password;
 	String scopes;
 	
+	public TokenRequestData() {
+	
+	}
+	
 	public TokenRequestData(String username, String password, String scopes) {
 		super();
 		this.username = username;
