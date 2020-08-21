@@ -23,7 +23,6 @@ public class TokenAPI {
 		String password = tokenRequestData.getPassword();
 		String scopes = tokenRequestData.getScopes();
 
-
 		if (username != null && username.length() > 0
 				&& password != null && password.length() > 0
 				&& Authenticator.checkPassword(username, password)) {

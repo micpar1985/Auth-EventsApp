@@ -11,6 +11,8 @@ import java.net.URL;
 
 import com.event_app.auth.util.JWTHelper;
 import com.event_app.auth.util.JWTUtil;
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
 
 
 public class Authenticator {
@@ -35,7 +37,20 @@ public class Authenticator {
     }
 
     private static Customer getCustomerByNameFromCustomerAPI(String username) {
-        try {
+
+        RestTemplate restTemplate = new RestTemplate();
+        String customersUrl = "http://localhost:8080/api/customers/byname/" + username;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+getAppUserToken());
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<Customer> response = restTemplate.exchange(customersUrl, HttpMethod.GET, entity, Customer.class);
+        System.out.println("Result - status ("+ response.getStatusCode() + ") has body: " + response.hasBody());
+        Customer newCustomer = response.getBody();
+        return  newCustomer;
+
+         /*   try {
             URL url = new URL("http://localhost:8080/api/customers/byname/" + username);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -63,7 +78,7 @@ public class Authenticator {
         } catch (java.io.IOException e) {
             e.printStackTrace();
             return null;
-        }
+        }*/
     }
 
     public static Token getAppUserToken() {

@@ -8,11 +8,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import org.springframework.http.ResponseEntity;
+import java.nio.charset.Charset;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -45,8 +49,14 @@ public class RegisterAPI {
     }
 
     private void postNewCustomerToCustomerAPI(String json_string) {
-        try {
+        RestTemplate restTemplate = new RestTemplate();
+        String customersUrl = "http://localhost:8080/api/customers";
+        Customer customer = CustomerFactory.getCustomer(json_string);
+        ResponseEntity<Customer> response = restTemplate.exchange
+                (customersUrl, HttpMethod.POST, new HttpEntity<Customer>(createHeaders(customer.getName(), customer.getPassword())), Customer.class);
+        Customer newCustomer = response.getBody();
 
+        /*try {
             URL url = new URL("http://localhost:8080/api/customers");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -82,8 +92,18 @@ public class RegisterAPI {
 
             e.printStackTrace();
 
-        }
+        }*/
 
+    }
+
+    HttpHeaders createHeaders(String username, String password){
+        return new HttpHeaders() {{
+            String auth = username + ":" + password;
+            byte[] encodedAuth = Base64.encodeBase64(
+                    auth.getBytes(Charset.forName("US-ASCII")) );
+            String authHeader = "Basic " + new String( encodedAuth );
+            set( "Authorization", authHeader );
+        }};
     }
 
 }
