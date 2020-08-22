@@ -50,8 +50,9 @@ public class RegisterAPI {
             Customer customer = CustomerFactory.getCustomer(json_string);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Authorization", "Bearer " + getAppUserToken());
-            ResponseEntity<Customer> response = restTemplate.exchange(customersUrl, HttpMethod.POST, new HttpEntity<>(customer, createHeaders(customer.getName(), customer.getPassword())), Customer.class);
+            headers.set("Authorization", "Bearer " + getAppUserToken().getToken());
+            //HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+            ResponseEntity<Customer> response = restTemplate.exchange(customersUrl, HttpMethod.POST, new HttpEntity<>(customer, headers), Customer.class);
             if (response.getStatusCode() == HttpStatus.CREATED) {
                 try {
                     System.out.println("Result - status (" + response.getStatusCode() + ") has body: " + response.hasBody());
