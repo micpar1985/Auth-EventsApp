@@ -2,11 +2,8 @@ package com.event_app.auth.api;
 
 import com.event_app.auth.domain.Customer;
 import com.event_app.auth.domain.Token;
-
 import com.event_app.auth.util.JWTHelper;
 import com.event_app.auth.util.JWTUtil;
-import com.github.openjson.JSONException;
-import com.github.openjson.JSONObject;
 import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -43,14 +40,6 @@ public class Authenticator {
             headers.set("Authorization", "Bearer " + getAppUserToken().getToken());
             HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
             response = restTemplate.exchange(customersUrl, HttpMethod.GET, entity, Customer.class);
-            System.out.println("Result - status (" + response.getStatusCode() + ") has body: " + response.hasBody());
-            if (response.getStatusCode() == HttpStatus.OK) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response.getBody());
-                } catch (JSONException e) {
-                    throw new RuntimeException("JSONException occurred");
-                }
-            }
         } catch (final HttpClientErrorException httpClientErrorException) {
             System.out.println("httpClientErrorException");
         } catch (HttpServerErrorException httpServerErrorException) {

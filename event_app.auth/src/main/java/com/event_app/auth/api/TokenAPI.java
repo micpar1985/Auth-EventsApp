@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/token")
 public class TokenAPI {
-	//JWTUtil jwtUtil = new JWTMockUtil();
-	JWTUtil jwtUtil = new JWTHelper();
+    //JWTUtil jwtUtil = new JWTMockUtil();
+    JWTUtil jwtUtil = new JWTHelper();
 
-	@PostMapping(consumes = "application/json")
-	public ResponseEntity<?> getToken(@RequestBody TokenRequestData tokenRequestData) {
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<?> getToken(@RequestBody TokenRequestData tokenRequestData) {
 
-		String username = tokenRequestData.getUsername();
-		String password = tokenRequestData.getPassword();
-		String scopes = tokenRequestData.getScopes();
+        String username = tokenRequestData.getUsername();
+        String password = tokenRequestData.getPassword();
+        String scopes = tokenRequestData.getScopes();
 
-		if (username != null && username.length() > 0
-				&& password != null && password.length() > 0
-				&& Authenticator.checkPassword(username, password)) {
-			Token token = jwtUtil.createToken(scopes);
-			ResponseEntity<?> response = ResponseEntity.ok(token);
-			return response;
-		}
-		// bad request
-		return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        if (username != null && username.length() > 0
+                && password != null && password.length() > 0
+                && Authenticator.checkPassword(username, password)) {
+            Token token = jwtUtil.createToken(scopes);
+            ResponseEntity<?> response = ResponseEntity.ok(token);
+            return response;
+        }
+        // bad request
+        return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-	}
+    }
 
-	
+
 }
