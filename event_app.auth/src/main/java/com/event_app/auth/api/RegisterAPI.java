@@ -42,8 +42,9 @@ public class RegisterAPI {
 
     private void postNewCustomerToCustomerAPI(String json_string) {
         try {
+            String apiHost = System.getenv("API_HOST");
             RestTemplate restTemplate = new RestTemplate();
-            String customersUrl = "http://localhost:8080/api/customers";
+            String customersUrl = "http://" + apiHost + "/api/customers";
             Customer customer = CustomerFactory.getCustomer(json_string);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

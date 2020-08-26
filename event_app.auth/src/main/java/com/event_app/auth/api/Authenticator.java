@@ -33,8 +33,9 @@ public class Authenticator {
     private static Customer getCustomerByNameFromCustomerAPI(String username) {
         ResponseEntity<Customer> response = null;
         try {
+            String apiHost = System.getenv("API_HOST");
             RestTemplate restTemplate = new RestTemplate();
-            String customersUrl = "http://localhost:8080/api/customers/byName/" + username;
+            String customersUrl = "http://" + apiHost + "/api/customers/byName/" + username;
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Authorization", "Bearer " + getAppUserToken().getToken());

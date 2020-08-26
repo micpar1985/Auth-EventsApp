@@ -1,5 +1,13 @@
-FROM openjdk:8
-RUN mkdir -p /opt/service
-ADD ./build/libs/event_app.auth-0.0.1-SNAPSHOT.jar /opt/service
+FROM gradle:jdk10 as builder
+COPY --chown=gradle:gradle . /app
+WORKDIR /app
+RUN gradle bootjar
+
+FROM openjdk:8-jdk-alpine
 EXPOSE 8081
-CMD ["java", "-jar", "/opt/service/event_app.auth-0.0.1-SNAPSHOT.jar"]
+VOLUME /tmp
+ARG LIBS=app/build/libs
+ARG apihost=localhost:8080
+ENV API_HOST=$apihost
+COPY --from=builder ${LIBS}/ /app/lib
+ENTRYPOINT ["java", "-jar", "./app/lib/event_app.auth-0.0.1-SNAPSHOT.jar"]
