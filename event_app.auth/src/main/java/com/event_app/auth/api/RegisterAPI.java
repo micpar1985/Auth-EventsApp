@@ -6,6 +6,11 @@ import com.event_app.auth.domain.Customer;
 import com.event_app.auth.domain.Token;
 import com.event_app.auth.util.JWTHelper;
 import com.event_app.auth.util.JWTUtil;
+
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,18 +30,35 @@ public class RegisterAPI {
 
     public static Token appUserToken;
     static JWTUtil jwtUtil = new JWTHelper();
+    
+    @Autowired
+    private Tracer tracer;
 
     @PostMapping
     public ResponseEntity<?> registerCustomer(@RequestBody Customer newCustomer, UriComponentsBuilder uri) {
+    	
+    	//---- Start Jaeger Span ----
+    	Span span = tracer.buildSpan("Register").start();
+    	
+    	ResponseEntity<?> response;
+    	
         if (newCustomer.getId() != 0 || newCustomer.getName() == null || newCustomer.getEmail() == null) {
             // Reject we'll assign the customer id
-            return ResponseEntity.badRequest().build();
+        	span.setTag("http.status_code", 400);
+            response = ResponseEntity.badRequest().build();
+            
+            //---- Finish Span ----
+            span.finish();
+            return response;
         }
         String json_string = CustomerFactory.getCustomerAsJSONString(newCustomer);
         postNewCustomerToCustomerAPI(json_string);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newCustomer.getId()).toUri();
-        ResponseEntity<?> response = ResponseEntity.created(location).build();
+        response = ResponseEntity.created(location).build();
+        
+        //---- Finish Span ----
+        span.finish();
         return response;
     }
 
