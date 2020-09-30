@@ -16,10 +16,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation('com.github.openjson:openjson:1.0.12')
 	//developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-		exclude group: 'com.vaadin.external.google', module:'android-json'
-	}
 	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
 	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
 	compile group: 'com.auth0', name: 'java-jwt', version: '3.8.1'
@@ -32,10 +28,3 @@ dependencies {
 	compile group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.3.2'
 }
 
-configurations {
-	testImplementation.exclude group: 'com.vaadin.external.google', module: 'android-json'
-}
-
-test {
-	useJUnitPlatform()
-}
